@@ -31,3 +31,69 @@ img {
 .app-container {
   padding: 2rem;
 }
+
+/* ===========================
+   모바일 전용 반응형 재배치
+   화면 너비 768px 이하일 때 적용
+=========================== */
+@media (max-width: 768px) {
+  /* 1) 전체 레이아웃을 세로 스크롤 구조로 */
+  .app-container {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  /* 2) 데스크톱 전용 사이드바 숨김 (예시) */
+  .sidebar {
+    display: none;
+  }
+
+  /* 3) 주요 콘텐츠 영역 너비 100% */
+  .header,
+  .main,
+  .footer {
+    width: 100%;
+    padding: 0 1rem;
+  }
+
+  /* 4) 그리드 섹션 1열로 쌓기 예시 */
+  .movie-list,
+  .feature-cards,
+  .grid-section {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  /* 5) 버튼·링크 터치 영역 키우기 */
+  button,
+  .btn {
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+  }
+
+  /* 6) 폰트 크기 조정 (필요에 따라) */
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.25rem; }
+  p  { font-size: 1rem; }
+}
+/* ───────────────────────────────────
+   공통 카드 레이아웃: 가로 스크롤형
+─────────────────────────────────── */
+.card-row {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 1rem;
+}
+.card-row > * {
+  flex: 0 0 auto;            /* 고정 너비 유지 */
+  scroll-snap-align: start;  /* 스냅 포인트 */
+}
+
+/* 스크롤바 숨기기 (선택) */
+.card-row::-webkit-scrollbar {
+  display: none;
+}
