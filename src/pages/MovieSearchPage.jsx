@@ -26,7 +26,8 @@ function MovieSearchPage() {
 
   const fetchMovies = async () => {
     try {
-      const url = `https://yts.mx/api/v2/list_movies.json?limit=${moviesPerPage}&page=${page}` +
+      const url =
+        `https://yts.mx/api/v2/list_movies.json?limit=${moviesPerPage}&page=${page}` +
         (keyword ? `&query_term=${keyword}` : '') +
         (genre !== 'all' ? `&genre=${genre}` : '') +
         `&sort_by=${sortBy}`;
@@ -53,12 +54,28 @@ function MovieSearchPage() {
           placeholder="영화 제목을 입력하세요"
           className="search-input"
         />
-        <select value={genre} onChange={(e) => setGenre(e.target.value)} className="search-select">
+        <select
+          value={genre}
+          onChange={(e) => {
+            setGenre(e.target.value);
+            setPage(1);
+          }}
+          className="search-select"
+        >
           {genres.map((g) => (
-            <option key={g} value={g}>{g === 'all' ? '모든 장르' : g}</option>
+            <option key={g} value={g}>
+              {g === 'all' ? '모든 장르' : g}
+            </option>
           ))}
         </select>
-        <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="search-select">
+        <select
+          value={sortBy}
+          onChange={(e) => {
+            setSortBy(e.target.value);
+            setPage(1);
+          }}
+          className="search-select"
+        >
           <option value="download_count">다운로드순</option>
           <option value="rating">평점순</option>
           <option value="like_count">좋아요순</option>
@@ -66,7 +83,8 @@ function MovieSearchPage() {
       </div>
 
       {movies.length > 0 ? (
-        <div className="movie-grid">
+        /* 기존 movie-grid에 card-row 클래스 추가 */
+        <div className="movie-grid card-row">
           {movies.map((movie) => (
             <div
               key={movie.id}
@@ -85,12 +103,18 @@ function MovieSearchPage() {
 
       <div className="pagination">
         {[...Array(Math.min(totalPages, 8)).keys()].map((i) => (
-          <button key={i} onClick={() => setPage(i + 1)} className={page === i + 1 ? 'page-btn active' : 'page-btn'}>
+          <button
+            key={i + 1}
+            onClick={() => setPage(i + 1)}
+            className={page === i + 1 ? 'page-btn active' : 'page-btn'}
+          >
             {i + 1}
           </button>
         ))}
         {page < totalPages && totalPages > 8 && (
-          <button onClick={() => setPage((prev) => prev + 1)} className="page-btn">Next →</button>
+          <button onClick={() => setPage((prev) => prev + 1)} className="page-btn">
+            Next →
+          </button>
         )}
       </div>
     </div>

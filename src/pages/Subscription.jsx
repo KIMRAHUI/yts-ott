@@ -72,8 +72,8 @@ function Subscription() {
         <>
           <h1 className="subscription-title">멤버십 구독</h1>
 
-          {/* 멤버십 선택 */}
-          <div className="plan-list">
+          {/* 멤버십 선택: 여기에 card-row 추가 */}
+          <div className="plan-list card-row">
             {['Basic', 'Standard', 'Premium'].map((plan) => (
               <div
                 key={plan}

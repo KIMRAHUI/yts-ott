@@ -6,7 +6,7 @@ import '../styles/Explore.css';
 function Explore() {
   const [movies, setMovies] = useState([]);
   const [genre, setGenre] = useState('');
-  const [sortBy, setSortBy] = useState('year'); 
+  const [sortBy, setSortBy] = useState('year');
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -75,7 +75,7 @@ function Explore() {
         </select>
       </div>
 
-      <div className="movie-list">
+      <div className="movie-list card-row">
         {movies.map((movie) => (
           <Link to={`/movie/${movie.id}`} key={movie.id} className="movie-card">
             <img src={movie.medium_cover_image} alt={movie.title} />
