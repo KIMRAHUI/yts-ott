@@ -1,0 +1,110 @@
+
+.explore-container {
+  padding: 2rem;
+  background-color: #c0c0c0;
+  font-family: 'Courier New', monospace;
+  color: black;
+  box-sizing: border-box;
+  min-height: 100vh;
+  text-align: center;
+}
+
+.explore-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.explore-filters input,
+.explore-filters select {
+  padding: 0.7rem 1.2rem;
+  font-size: 1rem;
+  width: 220px;
+  border: 2px solid #333;
+  border-radius: 6px;
+  background-color: #fff;
+}
+
+.movie-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.movie-card {
+  background-color: #ffffff;
+  border: 2px solid #555;
+  border-radius: 6px;
+  width: 180px;
+  height: 330px; /* ✅ 카드 높이 고정 */
+  padding: 1rem;
+  text-align: center;
+  text-decoration: none;
+  color: black;
+  transition: transform 0.2s ease;
+  box-shadow: inset -2px -2px #fff, inset 2px 2px #888;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.movie-card:hover {
+  transform: translateY(-5px);
+  background-color: #dddddd;
+}
+
+.movie-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.movie-card p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  height: 2.8rem;               /* ✅ 제목 높이 고정 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;        /* ✅ 두 줄 고정 */
+}
+
+.badge {
+  display: inline-block;
+  margin-top: 0.3rem;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.85rem;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+}
+
+.pagination {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.pagination button {
+  background-color: #fff;
+  color: black;
+  border: 2px solid #333;
+  padding: 0.5rem 0.9rem;
+  margin: 0 0.25rem;
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination button.active {
+  background-color: #333;
+  color: white;
+  font-weight: bold;
+}

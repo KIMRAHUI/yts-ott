@@ -1,0 +1,89 @@
+
+.support-container {
+  background-color: #c0c0c0;       
+  color: black;
+  padding: 2rem;
+  min-height: 100vh;              
+  box-sizing: border-box;
+  font-family: 'Courier New', monospace;
+}
+
+
+.support-title {
+  text-align: center;
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+
+.support-search-box {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;                       /
+  margin: 2rem auto;
+  flex-wrap: wrap;                
+}
+
+
+.support-input {
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: none;
+  width: 320px;
+  font-size: 1rem;
+}
+
+
+.support-button {
+  padding: 0.6rem 1.2rem;
+  background-color: #28a745;     
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+
+.faq-list {
+  max-width: 800px;
+  margin: 2rem auto;
+}
+
+
+.faq-box {
+  margin-bottom: 1rem;
+  background-color: #f0f0f0;
+  border: 2px solid #999;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+
+.faq-question {
+  padding: 1rem;
+  background-color: #e0e0e0;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
+.faq-answer {
+  padding: 1rem;
+  background-color: #fff;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+
+.support-card {
+  background-color: #eeeeee;              
+  border: 2px solid #808080;              
+  padding: 1.5rem;
+  margin: 2rem auto;
+  max-width: 600px;
+  border-radius: 6px;
+  font-size: 1rem;
+  box-shadow: inset -2px -2px #fff, inset 2px 2px #ccc;  
+}

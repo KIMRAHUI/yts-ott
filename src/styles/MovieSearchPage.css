@@ -1,0 +1,110 @@
+.search-container {
+  background-color: #c0c0c0;
+  color: black;
+  padding: 2rem;
+  font-family: 'Courier New', monospace;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.search-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.search-input {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 2px solid #888;
+  border-radius: 6px;
+  background-color: #fff;
+  width: 220px;
+}
+
+.search-select {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 2px solid #888;
+  border-radius: 6px;
+  background-color: #fff;
+  width: 160px;
+}
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1.5rem;
+  padding: 0 1rem;
+}
+
+.movie-card {
+  background-color: #fff;
+  padding: 1rem;
+  border: 2px solid #999;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  box-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+
+.movie-card:hover {
+  transform: translateY(-5px);
+  background-color: #f0f0f0;
+}
+
+.movie-card img {
+  width: 100%;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+}
+
+.movie-card h4 {
+  margin: 0.5rem 0 0.2rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.movie-card p {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.no-result {
+  text-align: center;
+  font-size: 1rem;
+  color: #555;
+  margin-top: 2rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.page-btn {
+  padding: 0.4rem 0.8rem;
+  background-color: #444;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+}
+
+.page-btn.active {
+  background-color: #28a745;
+  font-weight: bold;
+}

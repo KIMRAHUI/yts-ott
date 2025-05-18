@@ -1,0 +1,177 @@
+.mypage-container {
+  background-color: #c0c0c0;
+  color: black;
+  font-family: 'Courier New', monospace;
+  min-height: 100vh;
+  padding: 2rem;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.mypage-title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.mypage-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.mypage-tabs button {
+  background-color: #333;
+  color: white;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.mypage-tabs button.active {
+  background-color: #28a745;
+  font-weight: bold;
+}
+
+/* ❌ 흰 배경 박스 제거 */
+.mypage-section {
+  max-width: none;
+  margin: 0;
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.mypage-input,
+.mypage-select,
+.mypage-textarea {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  padding: 0.6rem;
+  margin: 0.5rem auto;
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 2px solid #666;
+  box-sizing: border-box;
+}
+
+.mypage-button {
+  background-color: #28a745;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 0.5rem auto;
+  display: block;
+}
+
+.mypage-button.danger {
+  background-color: #dc3545;
+}
+
+.mypage-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background-color: #ffffff;
+  border: 2px solid #999;
+  padding: 1rem;
+  border-radius: 6px;
+  margin: 1rem auto;
+  flex-wrap: wrap;
+  max-width: 500px;
+}
+
+.mypage-card img {
+  width: 80px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.mypage-card-info {
+  flex: 1;
+}
+
+
+.membership-cards-horizontal {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 100%;
+  padding: 1rem 0;
+  box-sizing: border-box;
+}
+
+.membership-card {
+  width: 220px;
+  height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  background-color: #f4f4f4;
+  border: 2px solid #444;
+  border-radius: 12px;
+  font-family: 'Courier New', monospace;
+  text-align: center;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.membership-card:hover {
+  transform: translateY(-5px);
+}
+
+.membership-card h4 {
+  margin-bottom: 0.5rem;
+}
+
+.membership-card p {
+  margin: 0.3rem 0;
+  font-size: 0.95rem;
+}
+
+.membership-card button {
+  margin-top: auto;
+}
+
+/* 요청하기 중앙 정렬 */
+.mypage-section h3,
+.mypage-section input,
+.mypage-section textarea,
+.mypage-section button {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+/* ✅ 인증 버튼 그룹 스타일 추가 */
+.auth-section {
+  text-align: center;
+  margin-top: 0.3rem;
+  margin-bottom: 0.8rem;
+}
+
+.auth-button-group {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.2rem;
+}
+
+.auth-button-group .mypage-button + .mypage-button {
+  margin-left: 0.05rem; 
+}

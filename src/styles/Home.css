@@ -1,0 +1,127 @@
+/* ✅ 브라우저 기본 여백 제거 및 폭 고정 */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* ✅ 전체 페이지 기본 폰트 및 배경 설정 (레트로 스타일) */
+body {
+  background-color: #c0c0c0; /* 윈도우95 스타일 회색 배경 */
+  font-family: 'Courier New', monospace;
+  color: black;
+}
+
+/* ✅ 최상위 컨테이너 (슬라이더 + 섹션 묶음) */
+.retro-window {
+  width: 100%;
+  background-color: #dfdfdf;
+  box-sizing: border-box;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* ✅ 장르별 섹션 (ACTION, COMEDY 등) */
+.retro-section {
+  width: 100%;
+  margin: 0;
+  padding: 1rem 0;
+  box-sizing: border-box;
+}
+
+/* 🎨 장르별 섹션 배경색 통일감 있는 구분 */
+.retro-section.action {
+  background-color: #e0e0e0;
+}
+
+.retro-section.comedy {
+  background-color: #d0d0d0;
+}
+
+.retro-section.animation {
+  background-color: #c8c8c8;
+}
+
+.retro-section.drama {
+  background-color: #d8d8d8;
+}
+
+.retro-section.scifi {
+  background-color: #e8e8e8;
+}
+
+/* ✅ 장르 제목 + 검색창 + 버튼 묶음 */
+.genre-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.5rem 1rem;
+  flex-wrap: wrap;
+}
+
+/* ✅ 장르 제목 스타일 */
+.genre-title {
+  font-size: 1.25rem;
+  white-space: nowrap;
+  margin: 0;
+  color: #000; /* 항상 검정색으로 명확하게 표시 */
+}
+
+/* ✅ 검색창 스타일 */
+.retro-input {
+  background-color: #f0f0f0;
+  border: 2px solid #404040;
+  padding: 6px 12px;
+  font-size: 1rem;
+  width: 240px; /* 넉넉한 크기 유지 */
+  font-family: inherit;
+}
+
+/* ✅ 검색 버튼 스타일 (음각 효과 포함) */
+.retro-button {
+  background-color: #e0e0e0;
+  border: 2px solid #808080;
+  box-shadow: inset -2px -2px #fff, inset 2px 2px #404040;
+  font-size: 1rem;
+  padding: 6px 16px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.retro-button:hover {
+  background-color: #d0d0d0;
+}
+
+/* ✅ 영화 카드 (슬라이더 안 각 카드) */
+.retro-movie-card {
+  text-align: center;
+  padding: 0.5rem 0;
+  box-sizing: border-box;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.retro-movie-card:hover {
+  transform: scale(1.03);
+  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* ✅ 포스터 이미지 스타일 (고정 크기 + 중앙 정렬) */
+.retro-movie-card img {
+  width: 140px;
+  height: auto;
+  border: 2px solid #000;
+  border-radius: 4px;
+  margin-bottom: 0.4rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* ✅ 영화 제목 텍스트 */
+.retro-movie-card p {
+  font-size: 0.85rem;
+  margin: 0;
+}
