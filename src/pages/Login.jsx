@@ -1,8 +1,9 @@
+// src/pages/Login.jsx
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
 
-function Login() {
+function Login({ onLogin }) {
   const navigate = useNavigate();
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
@@ -13,23 +14,35 @@ function Login() {
       return;
     }
 
-    const storedUsername = localStorage.getItem('username');
-    const storedPassword = localStorage.getItem('password');
-
-    // 회원가입 정보가 전혀 없을 경우
-    if (!storedUsername || !storedPassword) {
-      alert('회원가입이 필요합니다. 먼저 가입해주세요.');
+    // 1. localStorage에서 회원 정보 불러오기
+    const storedString = localStorage.getItem('userInfo');
+    if (!storedString) {
+      alert('회원가입 정보가 없습니다. 먼저 가입해주세요.');
       return;
     }
 
-    // 아이디/비밀번호가 일치하지 않을 경우
-    if (userId !== storedUsername || password !== storedPassword) {
+    let storedUser = null;
+    try {
+      storedUser = JSON.parse(storedString);
+      console.log('✅ 불러온 userInfo:', storedUser);
+    } catch (e) {
+      console.error('❌ userInfo 파싱 오류:', e);
+      alert('저장된 회원 정보가 손상되었습니다. 다시 가입해주세요.');
+      return;
+    }
+
+    // 2. 아이디/비밀번호 일치 확인
+    if (userId !== storedUser.username || password !== storedUser.password) {
       alert('아이디 또는 비밀번호가 일치하지 않습니다.');
       return;
     }
 
-    // 로그인 성공
+    // 3. 로그인 성공 처리
     localStorage.setItem('username', userId);
+    localStorage.setItem('isLoggedIn', 'true');
+
+    if (onLogin) onLogin(); // App.jsx로 로그인 상태 전달
+
     alert(`환영합니다, ${userId}님!`);
     navigate('/');
   };
@@ -52,7 +65,6 @@ function Login() {
         />
         <button onClick={handleLogin}>로그인</button>
 
-        {/* 회원가입 안내 버튼 */}
         <button
           className="signup-button"
           onClick={() => navigate('/signup')}

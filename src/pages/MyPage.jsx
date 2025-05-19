@@ -199,7 +199,7 @@ function MyPage() {
                       <button
                         className="mypage-button"
                         onClick={() => {
-                          localStorage.setItem('paymentInfo', JSON.stringify(payments[0])); // ✅ 결제정보 저장
+                          localStorage.setItem('paymentInfo', JSON.stringify(payments[0])); 
                           setShowConfirmation(true);
                         }}
                       >

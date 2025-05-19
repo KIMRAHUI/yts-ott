@@ -9,7 +9,7 @@ function Header() {
   const navigate = useNavigate();
 
   const [username, setUsername] = useState('');
-  const [selectedMenu, setSelectedMenu] = useState('');
+  const [selectedMenu, setSelectedMenu] = useState(location.pathname);
 
   // 로그인 상태 동기화
   useEffect(() => {
