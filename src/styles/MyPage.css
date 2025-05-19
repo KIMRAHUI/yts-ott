@@ -21,7 +21,7 @@
   margin-bottom: 2rem;
 }
 
-/* ✅ 모바일 - 그리드 3열 × 2줄 정렬 */
+/* 모바일 - 그리드 3열 × 2줄 정렬 */
 @media (max-width: 768px) {
   .mypage-tabs {
     display: grid;
@@ -189,6 +189,18 @@
   display: block;
 }
 
+ .profile-box {
+  background-color: white;
+  border: 2px solid #ccc;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  max-width: 500px;
+  margin: 1.5rem auto;
+  text-align: left;
+  line-height: 1.7;
+ }
+
 @media (max-width: 768px) {
   .request-section {
     display: flex;
@@ -205,9 +217,19 @@
   .request-section button {
     width: 100%;
   }
+   .profile-box {
+  background-color: white;
+  border: 2px solid #ccc;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  max-width: 500px;
+  margin: 1.5rem auto;
+  text-align: left;
+  line-height: 1.7;
 }
-
-/* ✅ 작은 모바일 대응 */
+}
+/* 작은 모바일 대응 */
 @media (max-width: 480px) {
   .mypage-container {
     padding: 1rem;
@@ -262,4 +284,17 @@
   .request-section button {
     margin: 0.3rem 0;
   }
+  
+  .profile-box {
+  background-color: white;
+  border: 2px solid #ccc;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  max-width: 500px;
+  margin: 1.5rem auto;
+  text-align: left;
+  line-height: 1.7;
+}
+
 }

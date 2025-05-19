@@ -16,9 +16,13 @@ function Signup() {
     }
 
     localStorage.setItem('username', userId);
-    localStorage.setItem('birthYear', birthYear);
+    localStorage.setItem('birthYear', birthYear);       // (기존) 입력 확인용으로 쓰는 경우
+    localStorage.setItem('birth', birthYear);           //  MyPage에서 표시할 생년월일
+    localStorage.setItem('password', password);         //  로그인 검증용
+    localStorage.setItem('recoveryEmail', recoveryEmail); //추후 복구용
+
     alert(`${userId}님, 가입이 완료되었습니다.`);
-    navigate('/subscribe'); //구독 페이지로 이동
+    navigate('/subscribe'); // 구독 페이지로 이동
   };
 
   return (

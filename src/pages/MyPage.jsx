@@ -10,7 +10,12 @@ function MyPage() {
   const [username] = useState(localStorage.getItem('username') || '');
   const [profile, setProfile] = useState({ password: '', email: '' });
   const [profileSaved, setProfileSaved] = useState(false);
-  const [payments, setPayments] = useState([{ type: 'card', bank: '', info: '', date: '' }]);
+  const [birth, setBirth] = useState('');
+  const [payments, setPayments] = useState(() => {
+    const saved = localStorage.getItem('paymentInfo');
+    return saved ? [JSON.parse(saved)] : [{ type: 'card', bank: '', info: '', date: '' }];
+  });
+
   const [membership, setMembership] = useState(localStorage.getItem('membership') || 'Basic');
   const [wishlist, setWishlist] = useState([{ title: '존 윅 4', id: 36334, date: '2025.05.10' }]);
   const [history, setHistory] = useState([{ title: '매트릭스', id: 108, date: '2025.05.09' }]);
@@ -29,6 +34,11 @@ function MyPage() {
     const params = new URLSearchParams(location.search);
     if (params.get('confirm') === '1') setShowConfirmation(true);
   }, [location]);
+
+  useEffect(() => {
+    const storedBirth = localStorage.getItem('birth');
+    if (storedBirth) setBirth(storedBirth);
+  }, []);
 
   useEffect(() => {
     wishlist.forEach(({ id }) => {
@@ -98,19 +108,41 @@ function MyPage() {
             {!profileSaved ? (
               <>
                 <p>아이디: {username}</p>
-                <input className="mypage-input" placeholder="비밀번호" type="password" value={profile.password} onChange={e => setProfile({ ...profile, password: e.target.value })} />
-                <input className="mypage-input" placeholder="이메일" type="email" value={profile.email} onChange={e => setProfile({ ...profile, email: e.target.value })} />
+                <input
+                  className="mypage-input"
+                  placeholder="비밀번호"
+                  type="password"
+                  value={profile.password}
+                  onChange={e => setProfile({ ...profile, password: e.target.value })}
+                />
+                <input
+                  className="mypage-input"
+                  placeholder="이메일"
+                  type="email"
+                  value={profile.email}
+                  onChange={e => setProfile({ ...profile, email: e.target.value })}
+                />
                 <button className="mypage-button" onClick={() => setProfileSaved(true)}>저장</button>
               </>
             ) : (
-              <>
+              <div className="profile-box">
                 <p><strong>아이디:</strong> {username}</p>
                 <p><strong>이메일:</strong> {profile.email}</p>
+                <p><strong>멤버십:</strong> {membership}</p>
+                <p><strong>결제일:</strong> {payments[0].date || '입력 안 됨'}</p>
+                <p>
+                  <strong>결제수단:</strong>{' '}
+                  {payments[0].type === 'card' ? '카드' : '계좌'}
+                  {payments[0].bank ? ` (${payments[0].bank})` : ' (선택 안 됨)'}
+                </p>
+                <p><strong>출생연도:</strong> {birth || '미입력'}</p>
                 <button className="mypage-button" onClick={() => setProfileSaved(false)}>수정</button>
-              </>
+              </div>
+
             )}
           </div>
         );
+
 
       case 'payment':
         return (
@@ -127,10 +159,24 @@ function MyPage() {
 
               {authMethod && (
                 <>
-                  <select className="mypage-input" value={payments[0].bank} onChange={e => setPayments([{ ...payments[0], bank: e.target.value }])}>
-                    <option value="">{authMethod === 'card' ? '카드사 선택' : '은행 선택'}</option>
-                    {['신한','롯데','현대','삼성'].map(b => <option key={b} value={b}>{b}</option>)}
+                  <select
+                    className="mypage-input"
+                    value={payments[0].bank}
+                    onChange={(e) => setPayments([{ ...payments[0], bank: e.target.value }])}
+                  >
+                    <option value="">
+                      {payments[0].type === 'card' ? '카드사 선택' : '은행 선택'}
+                    </option>
+                    {(payments[0].type === 'card'
+                      ? ['신한', '롯데', '국민', '삼성', '현대', '카카오']
+                      : ['신한', '우리', '국민', '카카오', 'IMG']
+                    ).map((b) => (
+                      <option key={b} value={b}>
+                        {b}
+                      </option>
+                    ))}
                   </select>
+
                   <input
                     className="mypage-input"
                     placeholder={authMethod === 'card' ? '카드 번호' : '계좌 번호'}
@@ -150,7 +196,16 @@ function MyPage() {
                     <>
                       <input className="mypage-input" placeholder="결제일 (숫자)" value={payments[0].date} onChange={e => setPayments([{ ...payments[0], date: e.target.value }])} />
                       <input className="mypage-input" placeholder="영수증 이메일" value={receiptEmail} onChange={e => setReceiptEmail(e.target.value)} />
-                      <button className="mypage-button" onClick={() => setShowConfirmation(true)}>결제 완료</button>
+                      <button
+                        className="mypage-button"
+                        onClick={() => {
+                          localStorage.setItem('paymentInfo', JSON.stringify(payments[0])); // ✅ 결제정보 저장
+                          setShowConfirmation(true);
+                        }}
+                      >
+                        결제 완료
+                      </button>
+
                     </>
                   )}
                 </>
@@ -160,38 +215,38 @@ function MyPage() {
         );
 
       case 'membership':
-  return (
-    <div className="mypage-section">
-      <h3>멤버십 종류</h3>
-      <div className="card-row membership-row">
-        {['Basic', 'Standard', 'Premium'].map(type => (
-          <div
-            key={type}
-            className={`membership-card ${membership === type ? 'selected' : ''}`}
-            onClick={() => setMembership(type)}
-          >
-            <h4>{type}</h4>
-            <p>{type} 멤버십에 대한 설명입니다.</p>
-            <p>
-              <strong>
-                {type === 'Basic'
-                  ? '₩9,900'
-                  : type === 'Standard'
-                    ? '₩13,900'
-                    : '₩17,900'}
-              </strong>
-            </p>
-            <button
-              className="mypage-button"
-              onClick={() => setActiveTab('payment')}
-            >
-              결제하기
-            </button>
+        return (
+          <div className="mypage-section">
+            <h3>멤버십 종류</h3>
+            <div className="card-row membership-row">
+              {['Basic', 'Standard', 'Premium'].map(type => (
+                <div
+                  key={type}
+                  className={`membership-card ${membership === type ? 'selected' : ''}`}
+                  onClick={() => setMembership(type)}
+                >
+                  <h4>{type}</h4>
+                  <p>{type} 멤버십에 대한 설명입니다.</p>
+                  <p>
+                    <strong>
+                      {type === 'Basic'
+                        ? '₩9,900'
+                        : type === 'Standard'
+                          ? '₩13,900'
+                          : '₩17,900'}
+                    </strong>
+                  </p>
+                  <button
+                    className="mypage-button"
+                    onClick={() => setActiveTab('payment')}
+                  >
+                    결제하기
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
-        ))}
-      </div>
-    </div>
-  );
+        );
 
 
       case 'wishlist':

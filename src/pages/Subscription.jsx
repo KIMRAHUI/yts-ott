@@ -2,7 +2,6 @@ import { useState } from 'react';
 import '../styles/Subscription.css';
 
 function Subscription() {
-  // 상태값 정의
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [authMethod, setAuthMethod] = useState('');
   const [authValue, setAuthValue] = useState('');
@@ -16,12 +15,10 @@ function Subscription() {
   const [receiptEmail, setReceiptEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // 카드 번호 자동 하이픈 포맷
   const formatCardNumber = (value) => {
     return value.replace(/\D/g, '').replace(/(.{4})/g, '$1-').replace(/-$/, '');
   };
 
-  // 계좌 번호 자동 하이픈 포맷
   const formatAccountNumber = (value) => {
     const clean = value.replace(/\D/g, '');
     return clean.replace(/(\d{3})(\d{3})(\d{0,6})/, (_, a, b, c) =>
@@ -29,7 +26,6 @@ function Subscription() {
     );
   };
 
-  // 인증번호 전송
   const handleSendAuth = () => {
     if (!authValue) return alert('인증 대상을 입력해주세요.');
     setAuthSent(true);
@@ -38,7 +34,6 @@ function Subscription() {
     alert(`인증번호가 전송되었습니다: ${code}`);
   };
 
-  // 인증번호 확인
   const handleConfirmCode = () => {
     if (enteredCode === authCode) {
       setIsAuthConfirmed(true);
@@ -48,7 +43,6 @@ function Subscription() {
     }
   };
 
-  // 결제 제출
   const handleSubmit = () => {
     if (
       selectedPlan &&
@@ -60,6 +54,13 @@ function Subscription() {
       paymentDay &&
       receiptEmail
     ) {
+      // 결제 정보 저장
+      localStorage.setItem('membership', selectedPlan);
+      localStorage.setItem('paymentInfo', JSON.stringify({
+        type: paymentType,
+        bank: cardBank,
+        date: paymentDay
+      }));
       setIsSubmitted(true);
     } else {
       alert('모든 항목을 입력해주세요.');
@@ -72,7 +73,6 @@ function Subscription() {
         <>
           <h1 className="subscription-title">멤버십 구독</h1>
 
-          {/* 멤버십 선택: 여기에 card-row 추가 */}
           <div className="plan-list card-row">
             {['Basic', 'Standard', 'Premium'].map((plan) => (
               <div
@@ -89,7 +89,6 @@ function Subscription() {
             ))}
           </div>
 
-          {/* 인증 섹션 */}
           <div className="auth-section">
             <label>인증 방법 선택</label>
             <select value={authMethod} onChange={(e) => setAuthMethod(e.target.value)}>
@@ -105,8 +104,8 @@ function Subscription() {
                   <select value={cardBank} onChange={(e) => setCardBank(e.target.value)}>
                     <option value="">{authMethod === 'card' ? '카드사 선택' : '은행 선택'}</option>
                     {(authMethod === 'card'
-                      ? ['신한', '롯데', '현대', '삼성']
-                      : ['국민', '농협', '신한', '우리', '카카오']
+                      ? ['신한', '롯데', '국민', '삼성', '현대', '카카오']
+                      : ['신한', '우리', '국민', '카카오', 'IMG']
                     ).map((item) => (
                       <option key={item} value={item}>{item}</option>
                     ))}
@@ -119,8 +118,8 @@ function Subscription() {
                     authMethod === 'card'
                       ? '카드 번호 입력'
                       : authMethod === 'account'
-                      ? '계좌 번호 입력'
-                      : '전화번호 입력'
+                        ? '계좌 번호 입력'
+                        : '전화번호 입력'
                   }
                   value={authValue}
                   onChange={(e) =>
@@ -128,22 +127,20 @@ function Subscription() {
                       authMethod === 'card'
                         ? formatCardNumber(e.target.value)
                         : authMethod === 'account'
-                        ? formatAccountNumber(e.target.value)
-                        : e.target.value
+                          ? formatAccountNumber(e.target.value)
+                          : e.target.value
                     )
                   }
                 />
               </>
             )}
 
-            {/* 인증번호 전송 */}
             {!isAuthConfirmed && authValue && !authSent && (
               <button className="send-auth-button" onClick={handleSendAuth}>
                 인증번호 전송
               </button>
             )}
 
-            {/* 인증번호 입력 및 재전송 */}
             {authSent && !isAuthConfirmed && (
               <>
                 <input
@@ -162,7 +159,6 @@ function Subscription() {
             )}
           </div>
 
-          {/* 결제 정보 */}
           <div className="payment-info">
             <label>결제 수단 선택</label>
             <select value={paymentType} onChange={(e) => setPaymentType(e.target.value)}>
@@ -191,9 +187,7 @@ function Subscription() {
                     setAuthValue(
                       paymentType === 'card'
                         ? formatCardNumber(e.target.value)
-                        : paymentType === 'account'
-                        ? formatAccountNumber(e.target.value)
-                        : e.target.value
+                        : formatAccountNumber(e.target.value)
                     )
                   }
                 />

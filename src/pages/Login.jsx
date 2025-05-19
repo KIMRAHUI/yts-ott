@@ -13,6 +13,22 @@ function Login() {
       return;
     }
 
+    const storedUsername = localStorage.getItem('username');
+    const storedPassword = localStorage.getItem('password');
+
+    // 회원가입 정보가 전혀 없을 경우
+    if (!storedUsername || !storedPassword) {
+      alert('회원가입이 필요합니다. 먼저 가입해주세요.');
+      return;
+    }
+
+    // 아이디/비밀번호가 일치하지 않을 경우
+    if (userId !== storedUsername || password !== storedPassword) {
+      alert('아이디 또는 비밀번호가 일치하지 않습니다.');
+      return;
+    }
+
+    // 로그인 성공
     localStorage.setItem('username', userId);
     alert(`환영합니다, ${userId}님!`);
     navigate('/');
