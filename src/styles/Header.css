@@ -1,64 +1,72 @@
-/* ✅ 상단 헤더 전체 컨테이너 */
+/* 상단 헤더 전체 컨테이너 */
 .retro-header {
   display: flex;
-  justify-content: space-between;  /* 로고 ↔ 메뉴 양쪽 배치 */
+  justify-content: space-between;
   align-items: center;
-  background-color: #000080;       /* 진한 레트로 블루 */
+  background-color: #000080;
   padding: 1rem 2rem;
   position: sticky;
   top: 0;
-  z-index: 1000;
-  width: 100%;
+  left: 0;
+  width: 100vw;
   box-sizing: border-box;
   border-bottom: 1px solid #333;
+  z-index: 1000;
+  flex-wrap: nowrap;
+  overflow-x: auto;
 }
 
-/* ✅ 로고 텍스트 스타일 */
+/* 로고 텍스트 스타일 */
 .retro-logo-text {
   color: white;
   font-weight: bold;
   font-size: 1.5rem;
   text-decoration: none;
+  white-space: nowrap;
 }
 
-/* ✅ 메뉴 영역 스타일 */
+/* 메뉴 영역 스타일 */
 .retro-nav {
   display: flex;
   align-items: center;
-  gap: 1.5rem;  /* 메뉴 사이 여백 */
+  gap: 1.5rem;
+  flex-wrap: nowrap;
+  overflow-x: auto;
 }
 
-/* ✅ 모든 메뉴 링크를 항상 흰색으로 표시 (기본/방문/활성 상태 포함) */
+/* 기본 링크 스타일 */
 .retro-nav a,
 .retro-nav a:visited,
 .retro-nav a:active {
   color: white;
   text-decoration: none;
   font-weight: normal;
+  white-space: nowrap;
 }
 
-/* ✅ 현재 선택된 메뉴 링크 스타일 (배경 흰색 + 텍스트 검정) */
+/* 현재 활성 메뉴 */
 .retro-nav .active {
-  background-color: #f0f0f0;       /* 밝은 회색 배경 */
-  color: #000 !important;          /* 🔥 텍스트를 반드시 검정으로 (덮어쓰기 강제) */
+  background-color: #f0f0f0;
+  color: #000 !important;
   font-weight: bold;
   padding: 4px 10px;
   border-radius: 2px;
 }
 
-/* ✅ 마우스 오버 시 메뉴 강조 */
+/* 마우스 오버 시 강조 */
 .retro-nav a:hover {
-  background-color: #dcdcdc;       /* hover 배경색 */
-  color: #000;                     /* hover 시 검정 텍스트로 고정 */
+  background-color: #dcdcdc;
+  color: #000;
 }
 
-/* ✅ 로그인된 사용자 이름 표시 */
+/* 로그인된 사용자 이름 */
 .retro-username {
   color: white;
   font-weight: bold;
+  white-space: nowrap;
 }
 
-/* ✅ 공통 버튼 기본 스타일 */
+/* 공통 버튼 */
 .retro-button {
   font-family: 'Courier New', monospace;
   font-size: 1rem;
@@ -66,16 +74,63 @@
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  white-space: nowrap;
 }
 
-/* ✅ 로그인 버튼 스타일 (초록색) */
+/* 로그인 버튼 */
 .retro-button.success {
   background-color: #28a745;
   color: #fff;
 }
 
-/* ✅ 로그아웃 버튼 스타일 (빨간색) */
+/* 로그아웃 버튼 */
 .retro-button.danger {
   background-color: #dc3545;
   color: #fff;
+}
+
+/* 로그인된 사용자 + 로그아웃을 묶는 박스 */
+.retro-user-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* 모바일 반응형 수정 */
+@media (max-width: 480px) {
+  .retro-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem 1.2rem;
+  }
+
+  .retro-logo-text {
+    font-size: 1.1rem;
+  }
+
+  .retro-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    font-size: 0.9rem;
+    justify-content: flex-end;     
+    width: 100%;
+  }
+
+  .retro-user-box {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    justify-content: flex-end;  
+    width: 100%;
+  }
+
+  .retro-button {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.6rem;
+  }
 }
