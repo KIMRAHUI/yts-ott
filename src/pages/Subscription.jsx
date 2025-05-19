@@ -104,7 +104,7 @@ function Subscription() {
                   <select value={cardBank} onChange={(e) => setCardBank(e.target.value)}>
                     <option value="">{authMethod === 'card' ? '카드사 선택' : '은행 선택'}</option>
                     {(authMethod === 'card'
-                      ? ['신한', '롯데', '국민', '삼성', '현대', '카카오']
+                      ? ['신한','국민', '삼성', '현대', '카카오']
                       : ['신한', '우리', '국민', '카카오', 'IMG']
                     ).map((item) => (
                       <option key={item} value={item}>{item}</option>
@@ -172,8 +172,8 @@ function Subscription() {
                 <select value={cardBank} onChange={(e) => setCardBank(e.target.value)}>
                   <option value="">{paymentType === 'card' ? '카드사 선택' : '은행 선택'}</option>
                   {(paymentType === 'card'
-                    ? ['신한', '롯데', '현대', '삼성']
-                    : ['국민', '농협', '신한', '우리', '카카오']
+                    ? ['신한','국민', '삼성', '현대', '카카오']
+                      : ['신한', '우리', '국민', '카카오', 'IMG']
                   ).map((item) => (
                     <option key={item} value={item}>{item}</option>
                   ))}
