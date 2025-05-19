@@ -1,85 +1,73 @@
-/* ✅ 브라우저 기본 여백 제거 및 폭 고정 */
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  overflow-x: hidden;
-}
-
-/* ✅ 전체 페이지 기본 폰트 및 배경 설정 (레트로 스타일) */
-body {
-  background-color: #c0c0c0; /* 윈도우95 스타일 회색 배경 */
+.home-container {
+  background-color: #c0c0c0;
   font-family: 'Courier New', monospace;
   color: black;
-}
-
-/* ✅ 최상위 컨테이너 (슬라이더 + 섹션 묶음) */
-.retro-window {
-  width: 100%;
-  background-color: #dfdfdf;
-  box-sizing: border-box;
-  border: none;
   padding: 0;
   margin: 0;
-}
-
-/* ✅ 장르별 섹션 (ACTION, COMEDY 등) */
-.retro-section {
-  width: 100%;
-  margin: 0;
-  padding: 1rem 0;
   box-sizing: border-box;
 }
 
-/* 🎨 장르별 섹션 배경색 통일감 있는 구분 */
-.retro-section.action {
-  background-color: #e0e0e0;
+.home-hero {
+  width: 100vw;
+  height: auto;
+  max-height: 420px;
+  overflow: hidden;
+  background-color: #000;
+  margin: 0 auto 2rem;
+  box-sizing: border-box;
 }
 
-.retro-section.comedy {
-  background-color: #d0d0d0;
+.home-banner {
+  width: 100vw;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
 }
 
-.retro-section.animation {
-  background-color: #c8c8c8;
-}
-
-.retro-section.drama {
-  background-color: #d8d8d8;
-}
-
-.retro-section.scifi {
-  background-color: #e8e8e8;
-}
-
-/* ✅ 장르 제목 + 검색창 + 버튼 묶음 */
 .genre-header {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 0.5rem 1rem;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.4rem;
+  padding: 1.5rem 1rem 1rem;
+  margin-bottom: 1rem;
+  max-width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
 }
 
-/* ✅ 장르 제목 스타일 */
 .genre-title {
-  font-size: 1.25rem;
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-right: 1rem;
   white-space: nowrap;
-  margin: 0;
-  color: #000; /* 항상 검정색으로 명확하게 표시 */
 }
 
-/* ✅ 검색창 스타일 */
+.search-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 500px;
+}
+
 .retro-input {
   background-color: #f0f0f0;
   border: 2px solid #404040;
   padding: 6px 12px;
   font-size: 1rem;
-  width: 240px; /* 넉넉한 크기 유지 */
   font-family: inherit;
+  color: black;
+  width: 240px;
+  min-width: 150px;
+  flex: 1 1 auto;
 }
 
-/* ✅ 검색 버튼 스타일 (음각 효과 포함) */
 .retro-button {
   background-color: #e0e0e0;
   border: 2px solid #808080;
@@ -88,40 +76,138 @@ body {
   padding: 6px 16px;
   cursor: pointer;
   font-family: inherit;
+  color: black;
+  white-space: nowrap;
+  flex: 0 0 auto;
+  width: auto;
 }
 
-.retro-button:hover {
-  background-color: #d0d0d0;
-}
-
-/* ✅ 영화 카드 (슬라이더 안 각 카드) */
-.retro-movie-card {
+.retro-footer {
+  width: 100vw;
+  background-color: #000080;
+  color: white;
+  font-family: 'Courier New', monospace;
   text-align: center;
-  padding: 0.5rem 0;
-  box-sizing: border-box;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.retro-movie-card:hover {
-  transform: scale(1.03);
-  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
-}
-
-/* ✅ 포스터 이미지 스타일 (고정 크기 + 중앙 정렬) */
-.retro-movie-card img {
-  width: 140px;
-  height: auto;
-  border: 2px solid #000;
-  border-radius: 4px;
-  margin-bottom: 0.4rem;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-/* ✅ 영화 제목 텍스트 */
-.retro-movie-card p {
+  padding: 1.5rem 1rem;
   font-size: 0.85rem;
-  margin: 0;
+  line-height: 1.5;
+  border-top: 2px solid #fff;
+  margin-top: 2rem;
+  box-sizing: border-box;
+}
+
+.retro-footer .footer-line {
+  margin: 0.3rem 0;
+  white-space: nowrap;
+}
+
+.retro-footer .footer-copy {
+  margin-top: 0.7rem;
+  font-size: 0.75rem;
+  color: #aaa;
+}
+
+.retro-user-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  white-space: nowrap;
+  font-size: 0.85rem;
+}
+
+/* 모바일 반응형 대응 */
+@media (max-width: 480px) {
+  .home-hero {
+    aspect-ratio: 16 / 9;
+    width: 100vw;
+    margin: 0;
+  }
+
+  .home-banner {
+    object-fit: cover;
+  }
+
+  .genre-title {
+    font-size: 1.2rem;
+  }
+
+  .retro-input,
+  .retro-button {
+    font-size: 0.95rem;
+  }
+
+  .genre-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    text-align: left;
+    padding: 1rem;
+  }
+
+  .search-row {
+    width: 100%;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+  }
+
+  .retro-input {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .retro-button {
+    padding: 0.5rem 1rem;
+  }
+
+  .retro-footer {
+    font-size: 0.8rem;
+    padding: 1rem;
+  }
+
+  .retro-footer .footer-line {
+    white-space: normal;
+  }
+
+  .retro-footer .footer-copy {
+    font-size: 0.7rem;
+  }
+}
+
+/* 데스크탑(웹) 전용 스타일 */
+@media (min-width: 1024px) {
+  .home-hero {
+    width: 100vw;
+    max-height: 420px;
+    overflow: hidden;
+    background-color: #000;
+    margin: 0 auto 2rem;
+    box-sizing: border-box;
+  }
+
+  .home-banner {
+    width: 100vw;
+    height: 100%;
+    object-fit: cover;
+    object-position: left center; /* 수정: 텍스트 왼쪽 잘림 방지 */
+    display: block;
+  }
+
+  .genre-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 0.5rem; /* 수정: 검색창 왼쪽으로 더 이동 */
+    padding-right: 1rem;
+    max-width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  .search-row {
+    justify-content: flex-start;
+    gap: 0.65rem;
+  }
 }

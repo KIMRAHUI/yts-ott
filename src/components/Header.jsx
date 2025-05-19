@@ -1,5 +1,5 @@
 // 메뉴 + 로그인
-// 🖥️ 상단 고정 헤더 컴포넌트
+// 상단 고정 헤더 컴포넌트
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import '../styles/Header.css'; // 스타일 외부 분리
@@ -35,7 +35,7 @@ function Header() {
       {/* 로고 */}
       <div className="retro-logo">
         <Link to="/" className="retro-logo-text">
-          🎬 YTS OTT
+          📽️ FilmDreams
         </Link>
       </div>
 
@@ -65,7 +65,7 @@ function Header() {
           고객지원
         </Link>
 
-        {/* ✅ 로그인 시에만 마이페이지 보이도록 조건부 렌더링 */}
+        {/* 로그인 시에만 마이페이지 표시 */}
         {username && (
           <Link
             to="/mypage"
@@ -76,14 +76,14 @@ function Header() {
           </Link>
         )}
 
-        {/* 로그인 or 로그아웃 버튼 */}
+        {/* 로그인 or 로그아웃 상태 */}
         {username ? (
-          <>
+          <div className="retro-user-box">
             <span className="retro-username">👤 {username}님</span>
             <button className="retro-button danger" onClick={handleLogout}>
               로그아웃
             </button>
-          </>
+          </div>
         ) : (
           <button className="retro-button success" onClick={() => navigate('/login')}>
             로그인
