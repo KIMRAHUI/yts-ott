@@ -14,6 +14,7 @@ function Home() {
   const [genreMovies, setGenreMovies] = useState({});
   const [genreSearchInputs, setGenreSearchInputs] = useState({});
   const [genreSearchResults, setGenreSearchResults] = useState({});
+  const [hoveredMovieId, setHoveredMovieId] = useState(null);
 
   useEffect(() => {
     const fetchByGenre = async (genre) => {
@@ -100,16 +101,29 @@ function Home() {
 
           <Slider {...settings}>
             {(genreSearchResults[genre] || genreMovies[genre] || []).map((movie) => (
-              <div key={movie.id} className="retro-movie-card">
+              <div
+                key={movie.id}
+                className="retro-movie-card"
+                onMouseEnter={() => setHoveredMovieId(movie.id)}
+                onMouseLeave={() => setHoveredMovieId(null)}
+              >
                 <Link to={`/movie/${movie.id}`}>
-                  <img
-                    src={movie.medium_cover_image || '/assets/images/default-poster.png'}
-                    alt={movie.title}
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = '/assets/images/default-poster.png';
-                    }}
-                  />
+                  <div className="movie-thumbnail">
+                    <img
+                      src={movie.medium_cover_image || '/assets/images/default-poster.png'}
+                      alt={movie.title}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = '/assets/images/default-poster.png';
+                      }}
+                    />
+                    {hoveredMovieId === movie.id && (
+                      <div className="movie-hover">
+                        <p>{movie.summary?.slice(0, 100) || '줄거리 정보 없음'}</p>
+                        <small>상세보기를 원하시면 클릭해주세요</small>
+                      </div>
+                    )}
+                  </div>
                   <p style={{ color: 'black', fontWeight: 'bold' }}>{movie.title}</p>
                 </Link>
               </div>
@@ -118,17 +132,15 @@ function Home() {
         </section>
       ))}
 
-    <footer className="retro-footer">
-  <div className="footer-line">
-    📧 support@ytsott.com &nbsp;&nbsp;|&nbsp;&nbsp; 📞 1600-0000 &nbsp;&nbsp;|&nbsp;&nbsp; 🕑 평일 10시 ~ 17시
-  </div>
-  <div className="footer-line">
-    🏢 서울특별시 강남구 테헤란로 123, YTS빌딩
-  </div>
-  <p className="footer-copy">ⓒ 2025 YTS OTT Inc. All rights reserved.</p>
-</footer>
-
-
+      <footer className="retro-footer">
+        <div className="footer-line">
+          📧 support@ytsott.com &nbsp;&nbsp;|&nbsp;&nbsp; 📞 1600-0000 &nbsp;&nbsp;|&nbsp;&nbsp; 🕒 평일 10시 ~ 17시
+        </div>
+        <div className="footer-line">
+          🏢 서울특별시 강남구 테헤란로 123, YTS빌딩
+        </div>
+        <p className="footer-copy">Ⓜ 2025 YTS OTT Inc. All rights reserved.</p>
+      </footer>
     </div>
   );
 }
