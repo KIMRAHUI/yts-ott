@@ -16,7 +16,8 @@ function MovieDetail() {
   const [newRating, setNewRating] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [similarMovies, setSimilarMovies] = useState([]);
-
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [isTrailerPlaying, setIsTrailerPlaying] = useState(false);
   const username = localStorage.getItem('username');
   const birthYear = localStorage.getItem('birthYear');
   const currentYear = new Date().getFullYear();
@@ -51,6 +52,35 @@ function MovieDetail() {
 
     fetchMovie();
   }, [id, age, navigate]);
+
+  // ✅ 진입 시 찜 여부 확인
+  useEffect(() => {
+    if (!movie) return;
+    const saved = JSON.parse(localStorage.getItem('yts_favorites')) || [];
+    const exists = saved.some((m) => m.id === movie.id);
+    setIsFavorite(exists);
+  }, [movie]);
+
+  // ✅ 찜 추가/제거 함수
+  const toggleFavorite = () => {
+    const saved = JSON.parse(localStorage.getItem('yts_favorites')) || [];
+
+    if (isFavorite) {
+      const updated = saved.filter((m) => m.id !== movie.id);
+      localStorage.setItem('yts_favorites', JSON.stringify(updated));
+      setIsFavorite(false);
+    } else {
+      const newFav = {
+        id: movie.id,
+        title: movie.title,
+        category: movie.genres?.[0] || 'unknown',
+        description: movie.summary || '',
+        poster: movie.medium_cover_image,
+      };
+      localStorage.setItem('yts_favorites', JSON.stringify([newFav, ...saved]));
+      setIsFavorite(true);
+    }
+  };
 
   useEffect(() => {
     const fetchSimilar = async () => {
@@ -103,6 +133,26 @@ function MovieDetail() {
     setEditRating(0);
   };
 
+  // --- 수정된 부분: 예고편 재생 및 시청기록 저장 함수 ---
+  const handlePlayTrailer = () => {
+    if (!movie) return;
+
+    const history = JSON.parse(localStorage.getItem('yts_history')) || [];
+    const exists = history.some((h) => h.id === movie.id);
+
+    if (!exists) {
+      const newEntry = {
+        id: movie.id,
+        title: movie.title,
+        date: new Date().toISOString().split('T')[0].replace(/-/g, '.'),
+        poster: movie.medium_cover_image,
+      };
+      localStorage.setItem('yts_history', JSON.stringify([newEntry, ...history]));
+    }
+
+    setIsTrailerPlaying(true); // iframe 보여주기 위해 상태 변경
+  };
+
   const renderHearts = (count, onClick) => {
     return [1, 2, 3, 4, 5].map((i) => (
       <span
@@ -127,6 +177,15 @@ function MovieDetail() {
         <div>
           <img className="movie-cover" src={posterSrc} alt={movie.title} />
 
+          <div className="yts-favorite-btn-container">
+            <button
+              className={`yts-favorite-btn ${isFavorite ? 'active' : ''}`}
+              onClick={toggleFavorite}
+            >
+              {isFavorite ? '❤️ 찜 완료' : '🤍 찜하기'}
+            </button>
+          </div>
+
           {username && movie.torrents && (
             <div className="download-button-box">
               <button className="download-toggle" onClick={() => setShowModal(true)}>
@@ -142,7 +201,9 @@ function MovieDetail() {
                 <div className="modal-options">
                   {movie.torrents.map((torrent, i) => (
                     <div key={i} className="modal-card">
-                      <p><strong>{torrent.quality}</strong> / {torrent.type}</p>
+                      <p>
+                        <strong>{torrent.quality}</strong> / {torrent.type}
+                      </p>
                       <p>{torrent.size}</p>
                       <a
                         href={torrent.url}
@@ -155,7 +216,9 @@ function MovieDetail() {
                     </div>
                   ))}
                 </div>
-                <button className="modal-close" onClick={() => setShowModal(false)}>닫기</button>
+                <button className="modal-close" onClick={() => setShowModal(false)}>
+                  닫기
+                </button>
               </div>
             </div>
           )}
@@ -184,10 +247,7 @@ function MovieDetail() {
                   {editingIndex === i ? (
                     <>
                       <div className="heart-row">{renderHearts(editRating, setEditRating)}</div>
-                      <textarea
-                        value={editValue}
-                        onChange={(e) => setEditValue(e.target.value)}
-                      />
+                      <textarea value={editValue} onChange={(e) => setEditValue(e.target.value)} />
                       <button onClick={() => handleSaveEdit(i)}>저장</button>
                     </>
                   ) : (
@@ -215,15 +275,42 @@ function MovieDetail() {
 
           {movie.yt_trailer_code ? (
             <div className="trailer-box">
-              <iframe
-                width="100%"
-                height="300"
-                src={`https://www.youtube.com/embed/${movie.yt_trailer_code}`}
-                title="예고편"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
+              {!isTrailerPlaying ? (
+                <div
+                  className="trailer-thumb"
+                  style={{ position: 'relative', cursor: 'pointer' }}
+                  onClick={handlePlayTrailer}
+                >
+                  <img
+                    src={`https://img.youtube.com/vi/${movie.yt_trailer_code}/hqdefault.jpg`}
+                    alt="예고편 썸네일"
+                    style={{ width: '100%', height: 'auto', display: 'block' }}
+                  />
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '50%',
+                      left: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      fontSize: '3rem',
+                      color: 'white',
+                      textShadow: '0 0 10px rgba(0,0,0,0.7)',
+                    }}
+                  >
+                    ▶
+                  </div>
+                </div>
+              ) : (
+                <iframe
+                  width="100%"
+                  height="300"
+                  src={`https://www.youtube.com/embed/${movie.yt_trailer_code}?autoplay=1`}
+                  title="예고편"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              )}
             </div>
           ) : (
             <p style={{ color: '#555', fontStyle: 'italic' }}>예고편이 제공되지 않습니다.</p>
@@ -234,7 +321,11 @@ function MovieDetail() {
               <h3 className="similar-title">Similar Movies</h3>
               <div className="similar-movie-list">
                 {similarMovies.map((m) => (
-                  <div key={m.id} className="similar-movie-card" onClick={() => navigate(`/movie/${m.id}`)}>
+                  <div
+                    key={m.id}
+                    className="similar-movie-card"
+                    onClick={() => navigate(`/movie/${m.id}`)}
+                  >
                     <img src={m.medium_cover_image} alt={m.title} />
                   </div>
                 ))}

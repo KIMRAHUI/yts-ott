@@ -283,3 +283,37 @@
   object-fit: cover;
   border-radius: 2px;
 }
+
+
+.yts-favorite-btn {
+  appearance: none;
+  border: 2px  #333 ;
+  background-color: #ffffff ;
+  color: black ;
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: none ;
+  outline: none;
+  display: inline-block;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.yts-favorite-btn:hover {
+  background-color: #f0f0f0 ;
+  transform: scale(1.03);
+}
+
+.yts-favorite-btn.active {
+  background-color: #ffe6e6;
+  border-color: red ;
+  color: darkred ;
+}
+
+.yts-favorite-btn-container {
+  margin-top: 1rem;
+  text-align: center;
+}
+
