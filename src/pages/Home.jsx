@@ -74,12 +74,12 @@ function Home() {
 
   return (
     <div className="home-container">
-      {/*  메인 이미지 배너 */}
+      {/* 메인 이미지 배너 */}
       <div className="home-hero">
         <img src={homeBanner} alt="Main Banner" className="home-banner" />
       </div>
 
-      {/*  장르별 슬라이드 */}
+      {/* 장르별 슬라이드 */}
       {GENRES.map((genre) => (
         <section key={genre} className={`retro-section ${genre}`}>
           <div className="genre-header">
@@ -108,7 +108,7 @@ function Home() {
                 onMouseLeave={() => setHoveredMovieId(null)}
               >
                 <Link to={`/movie/${movie.id}`}>
-                  <div className="movie-thumbnail">
+                  <div className="movie-thumbnail" style={{ position: 'relative', overflow: 'hidden' }}>
                     <img
                       src={movie.medium_cover_image || '/assets/images/default-poster.png'}
                       alt={movie.title}

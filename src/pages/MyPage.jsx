@@ -17,8 +17,12 @@ function MyPage() {
   });
 
   const [membership, setMembership] = useState(localStorage.getItem('membership') || 'Basic');
-  const [wishlist, setWishlist] = useState([{ title: '존 윅 4', id: 36334, date: '2025.05.10' }]);
-  const [history, setHistory] = useState([{ title: '매트릭스', id: 108, date: '2025.05.09' }]);
+  const [wishlist, setWishlist] = useState(() => {
+    const stored = localStorage.getItem('yts_favorites');
+    return stored ? JSON.parse(stored) : [];
+  });
+  const [history, setHistory] = useState([]);
+
   const [sortOrder, setSortOrder] = useState('latest');
   const [request, setRequest] = useState({ title: '', content: '' });
   const [authMethod, setAuthMethod] = useState('');
@@ -29,6 +33,34 @@ function MyPage() {
   const [receiptEmail, setReceiptEmail] = useState('');
   const [wishlistPosters, setWishlistPosters] = useState({});
   const [historyPosters, setHistoryPosters] = useState({});
+
+  useEffect(() => {
+    const stored = localStorage.getItem('yts_history');
+    if (stored) {
+      setHistory(JSON.parse(stored));
+    }
+  }, []);
+
+  useEffect(() => {
+    history.forEach(({ id }) => {
+      axios.get(`https://yts.mx/api/v2/movie_details.json?movie_id=${id}`)
+        .then(res => setHistoryPosters(prev => ({ ...prev, [id]: res.data.data.movie.medium_cover_image })));
+    });
+  }, [history]);
+
+
+
+  useEffect(() => {
+    wishlist.forEach(({ id }) => {
+      axios.get(`https://yts.mx/api/v2/movie_details.json?movie_id=${id}`)
+        .then(res =>
+          setWishlistPosters(prev => ({
+            ...prev,
+            [id]: res.data.data.movie.medium_cover_image
+          }))
+        );
+    });
+  }, [wishlist]);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -99,6 +131,7 @@ function MyPage() {
         </div>
       );
     }
+
 
     switch (activeTab) {
       case 'profile':
@@ -199,7 +232,7 @@ function MyPage() {
                       <button
                         className="mypage-button"
                         onClick={() => {
-                          localStorage.setItem('paymentInfo', JSON.stringify(payments[0])); 
+                          localStorage.setItem('paymentInfo', JSON.stringify(payments[0]));
                           setShowConfirmation(true);
                         }}
                       >
@@ -261,8 +294,14 @@ function MyPage() {
                   <p className="small-text">{item.date}</p>
                 </div>
                 <button className="mypage-button danger" onClick={() => {
-                  const updated = [...wishlist]; updated.splice(idx, 1); setWishlist(updated);
-                }}>삭제</button>
+                  const updated = [...wishlist];
+                  updated.splice(idx, 1);
+                  setWishlist(updated);
+                  localStorage.setItem('yts_favorites', JSON.stringify(updated));
+                }}>
+                  삭제
+                </button>
+
               </div>
             ))}
           </div>
@@ -282,8 +321,15 @@ function MyPage() {
                   <p className="small-text">{item.date}</p>
                 </div>
                 <button className="mypage-button danger" onClick={() => {
-                  const updated = [...history]; updated.splice(idx, 1); setHistory(updated);
-                }}>삭제</button>
+                  const updated = [...history];
+                  updated.splice(idx, 1);
+                  setHistory(updated);
+                  localStorage.setItem('yts_history', JSON.stringify(updated));  
+                }}>
+                  삭제
+                </button>
+
+
               </div>
             ))}
           </div>
