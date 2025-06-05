@@ -1,0 +1,14 @@
+{
+  "genre_stats": [
+    { "genre": "액션", "like": 32, "dislike": 5 },
+    { "genre": "로맨스", "like": 18, "dislike": 12 },
+    { "genre": "공포", "like": 8, "dislike": 21 },
+    { "genre": "SF", "like": 25, "dislike": 9 }
+  ],
+  "actor_popularity": [
+    { "actor": "Tom Cruise", "count": 12 },
+    { "actor": "Leonardo DiCaprio", "count": 9 },
+    { "actor": "Scarlett Johansson", "count": 8 },
+    { "actor": "Brad Pitt", "count": 6 }
+  ]
+}
