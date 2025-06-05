@@ -197,14 +197,17 @@ function MovieDetail() {
       <div className="movie-content-layout">
         <div>
           <img className="movie-cover" src={posterSrc} alt={movie.title} />
-          <div className="yts-favorite-btn-container">
-            <button
-              className={`yts-favorite-btn ${isFavorite ? 'active' : ''}`}
-              onClick={toggleFavorite}
-            >
-              {isFavorite ? '❤️ 찜 완료' : '🤍 찜하기'}
-            </button>
-          </div>
+          {username && (
+            <div className="yts-favorite-btn-container">
+              <button
+                className={`yts-favorite-btn ${isFavorite ? 'active' : ''}`}
+                onClick={toggleFavorite}
+              >
+                {isFavorite ? '❤️ 찜 완료' : '🤍 찜하기'}
+              </button>
+            </div>
+          )}
+
           {username && movie.torrents && (
             <div className="download-button-box">
               <button className="download-toggle" onClick={() => setShowModal(true)}>
