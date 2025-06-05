@@ -24,14 +24,30 @@
 }
 
 .explore-filters input,
-.explore-filters select {
+.explore-filters select,
+.explore-filters .stats-btn {
   padding: 0.7rem 1.2rem;
   font-size: 1rem;
   width: 220px;
   border: 2px solid #333;
   border-radius: 6px;
   background-color: #fff;
+  font-family: 'Courier New', monospace;
+  box-sizing: border-box;
 }
+
+.explore-filters .stats-btn {
+  background-color: #444;
+  color: white;
+  cursor: pointer;
+  border: 2px solid #333;
+  transition: background-color 0.2s ease;
+}
+
+.explore-filters .stats-btn:hover {
+  background-color: #222;
+}
+
 
 .movie-list {
   display: grid;

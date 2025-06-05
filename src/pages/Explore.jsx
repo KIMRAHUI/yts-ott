@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import StatisticsModal from '../components/Statistics/StatisticsModal';
 import '../styles/Explore.css';
 
 function Explore() {
@@ -10,6 +11,7 @@ function Explore() {
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [showStats, setShowStats] = useState(false); // 📊 통계 모달 상태 추가
 
   const userBirth = localStorage.getItem('birthYear');
   const currentYear = new Date().getFullYear();
@@ -129,7 +131,10 @@ function Explore() {
             <option value="like_count">좋아요순</option>
             <option value="title">제목순</option>
           </select>
+          <button className="stats-btn" onClick={() => setShowStats(true)}>📊 통계 보기</button>
         </div>
+
+        {showStats && <StatisticsModal onClose={() => setShowStats(false)} />}
 
         <div className="movie-list">
           {movies.map((movie) => (
