@@ -73,25 +73,34 @@ function MovieDetail() {
     const exists = saved.some((m) => m.id === movie.id);
     setIsFavorite(exists);
   }, [movie]);
-
+   
   const toggleFavorite = () => {
-    const saved = JSON.parse(localStorage.getItem('yts_favorites')) || [];
-    if (isFavorite) {
-      const updated = saved.filter((m) => m.id !== movie.id);
-      localStorage.setItem('yts_favorites', JSON.stringify(updated));
-      setIsFavorite(false);
-    } else {
-      const newFav = {
-        id: movie.id,
-        title: movie.title,
-        category: movie.genres?.[0] || 'unknown',
-        description: movie.summary || '',
-        poster: movie.medium_cover_image,
-      };
-      localStorage.setItem('yts_favorites', JSON.stringify([newFav, ...saved]));
-      setIsFavorite(true);
-    }
-  };
+  const saved = JSON.parse(localStorage.getItem('yts_favorites')) || [];
+
+  if (isFavorite) {
+    const updated = saved.filter((m) => m.id !== movie.id);
+    localStorage.setItem('yts_favorites', JSON.stringify(updated));
+    setIsFavorite(false);
+  } else {
+    const now = new Date();
+    const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(
+      now.getDate()
+    ).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+    const newFav = {
+      id: movie.id,
+      title: movie.title,
+      category: movie.genres?.[0] || 'unknown',
+      description: movie.summary || '',
+      poster: movie.medium_cover_image,
+      date: formattedDate, // 📌 "YYYY-MM-DD HH:MM" 형태
+    };
+
+    localStorage.setItem('yts_favorites', JSON.stringify([newFav, ...saved]));
+    setIsFavorite(true);
+  }
+};
+
 
   useEffect(() => {
     const fetchSimilar = async () => {
@@ -184,21 +193,34 @@ function MovieDetail() {
     }
   };
 
-  const handlePlayTrailer = () => {
-    if (!movie) return;
-    const history = JSON.parse(localStorage.getItem('yts_history')) || [];
-    const exists = history.some((h) => h.id === movie.id);
-    if (!exists) {
-      const newEntry = {
-        id: movie.id,
-        title: movie.title,
-        date: new Date().toISOString().split('T')[0].replace(/-/g, '.'),
-        poster: movie.medium_cover_image,
-      };
-      localStorage.setItem('yts_history', JSON.stringify([newEntry, ...history]));
-    }
-    setIsTrailerPlaying(true);
-  };
+ const handlePlayTrailer = () => {
+  if (!movie) return;
+  const history = JSON.parse(localStorage.getItem('yts_history')) || [];
+  const exists = history.some((h) => h.id === movie.id);
+  if (!exists) {
+    const now = new Date();
+    const formattedDate = now.toLocaleString('ko-KR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true,
+      timeZone: 'Asia/Seoul' // 🔥 명시적 한국 시간대
+    }).replace('오전', 'AM').replace('오후', 'PM');
+
+    const newEntry = {
+      id: movie.id,
+      title: movie.title,
+      date: formattedDate, //  포맷팅된 한국 시간 문자열 저장
+      poster: movie.medium_cover_image,
+    };
+    localStorage.setItem('yts_history', JSON.stringify([newEntry, ...history]));
+  }
+  setIsTrailerPlaying(true);
+};
+
 
   const renderHearts = (count, onClick) => {
     return [1, 2, 3, 4, 5].map((i) => (
