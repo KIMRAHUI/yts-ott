@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/MyPage.css';
 
+const BASE_URL = 'https://yts-backend.onrender.com';
+
 function MyPage() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('profile');
@@ -30,7 +32,7 @@ function MyPage() {
   useEffect(() => {
     const uuid = localStorage.getItem('uuid') || localStorage.getItem('user_id');
     if (!uuid) return;
-    axios.get(`/api/auth/user/${uuid}`).then(res => {
+    axios.get(`${BASE_URL}/api/auth/user/${uuid}`).then(res => {
       const user = res.data;
       setMembership(user.membership);
       setPayments([{
@@ -82,7 +84,7 @@ function MyPage() {
     const uuid = localStorage.getItem('uuid') || localStorage.getItem('user_id');
     if (!uuid) return alert('로그인이 필요합니다.');
     try {
-      await axios.patch('/api/auth/update-payment', {
+      await axios.patch(`${BASE_URL}/api/auth/update-payment`, {
         id: uuid,
         membership,
         payment_type: payments[0].type,
@@ -147,7 +149,6 @@ function MyPage() {
           </div>
         </div>
       )}
-
 
       {activeTab === 'payment' && (
         <div className="mypage-section">
@@ -240,11 +241,7 @@ function MyPage() {
               >
                 <h4>{type}</h4>
                 <p>{type === 'Basic' ? '기본 화질, 저렴한 가격' : type === 'Standard' ? '고화질, 2인 동시 시청' : '초고화질, 4인 동시 시청'}</p>
-                <p>
-                  <strong>
-                    {type === 'Basic' ? '₩9,900' : type === 'Standard' ? '₩13,900' : '₩17,900'}
-                  </strong>
-                </p>
+                <p><strong>{type === 'Basic' ? '₩9,900' : type === 'Standard' ? '₩13,900' : '₩17,900'}</strong></p>
               </div>
             ))}
           </div>
