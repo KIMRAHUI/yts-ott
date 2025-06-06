@@ -93,10 +93,10 @@ function MyPage() {
     }
   };
 
- 
+
 
   // DB 저장 + 결제 완료 처리
-const saveToDB = async () => {
+  const saveToDB = async () => {
     const uuid = localStorage.getItem('uuid') || localStorage.getItem('user_id');
     if (!uuid) return alert('로그인이 필요합니다.');
     try {
@@ -179,7 +179,7 @@ const saveToDB = async () => {
           )}
 
           {!showConfirmation && activeTab === 'profile' && (
-            <div className="mypage-section">
+            <div className="mypage-section profile-box">  {/* 여기 profile-box 추가 */}
               <h3>프로필</h3>
               <p><strong>아이디:</strong> {username}</p>
               <p><strong>이메일:</strong> {profile.email}</p>
@@ -189,6 +189,7 @@ const saveToDB = async () => {
               <p><strong>출생연도:</strong> {birth || '미입력'}</p>
             </div>
           )}
+
 
           {!showConfirmation && activeTab === 'payment' && (
             <div className="mypage-section">
@@ -283,8 +284,8 @@ const saveToDB = async () => {
                         {type === 'Basic'
                           ? '₩9,900'
                           : type === 'Standard'
-                          ? '₩13,900'
-                          : '₩17,900'}
+                            ? '₩13,900'
+                            : '₩17,900'}
                       </strong>
                     </p>
                     <button

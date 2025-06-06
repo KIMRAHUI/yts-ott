@@ -139,6 +139,22 @@
   flex: 1;
 }
 
+/* 프로필 박스 스타일 */
+.profile-box {
+  background-color: white;
+  border: 2px solid #ccc;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  max-width: 500px;
+  margin: 1.5rem auto;
+  text-align: left;
+  line-height: 1.7;
+  font-size: 1rem;
+  color: #222;
+}
+
+/* membership 카드 그리드 레이아웃 */
 .membership-row.card-row {
   display: grid;
   grid-template-columns: repeat(3, minmax(220px, 1fr));
@@ -185,21 +201,10 @@
   font-size: 0.95rem;
 }
 
+/* 요청 섹션 */
 .request-section {
   display: block;
 }
-
- .profile-box {
-  background-color: white;
-  border: 2px solid #ccc;
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.05);
-  max-width: 500px;
-  margin: 1.5rem auto;
-  text-align: left;
-  line-height: 1.7;
- }
 
 @media (max-width: 768px) {
   .request-section {
@@ -217,18 +222,8 @@
   .request-section button {
     width: 100%;
   }
-   .profile-box {
-  background-color: white;
-  border: 2px solid #ccc;
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.05);
-  max-width: 500px;
-  margin: 1.5rem auto;
-  text-align: left;
-  line-height: 1.7;
 }
-}
+
 /* 작은 모바일 대응 */
 @media (max-width: 480px) {
   .mypage-container {
@@ -284,17 +279,4 @@
   .request-section button {
     margin: 0.3rem 0;
   }
-  
-  .profile-box {
-  background-color: white;
-  border: 2px solid #ccc;
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.05);
-  max-width: 500px;
-  margin: 1.5rem auto;
-  text-align: left;
-  line-height: 1.7;
-}
-
 }

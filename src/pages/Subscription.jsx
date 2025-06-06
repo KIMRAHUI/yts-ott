@@ -16,10 +16,12 @@ function Subscription() {
   const [receiptEmail, setReceiptEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  // 카드 번호 포맷 (4자리마다 하이픈)
   const formatCardNumber = (value) => {
     return value.replace(/\D/g, '').replace(/(.{4})/g, '$1-').replace(/-$/, '');
   };
 
+  // 계좌 번호 포맷 (3-3-6 형식, 최대 12자리)
   const formatAccountNumber = (value) => {
     const clean = value.replace(/\D/g, '');
     return clean.replace(/(\d{3})(\d{3})(\d{0,6})/, (_, a, b, c) =>
@@ -27,6 +29,7 @@ function Subscription() {
     );
   };
 
+  // 인증번호 전송 시뮬레이션 (실제 API 연동 필요 시 수정)
   const handleSendAuth = () => {
     if (!authValue) return alert('인증 대상을 입력해주세요.');
     setAuthSent(true);
@@ -35,6 +38,7 @@ function Subscription() {
     alert(`인증번호가 계좌/카드내역으로 전송되었습니다: ${code}`);
   };
 
+  // 인증번호 확인
   const handleConfirmCode = () => {
     if (enteredCode === authCode) {
       setIsAuthConfirmed(true);
@@ -44,49 +48,57 @@ function Subscription() {
     }
   };
 
+  // 폼 제출 (백엔드 API 호출)
   const handleSubmit = async () => {
     if (
-      selectedPlan &&
-      isAuthConfirmed &&
-      authMethod &&
-      authValue &&
-      paymentType &&
-      cardBank &&
-      paymentDay &&
-      receiptEmail
+      !selectedPlan ||
+      !isAuthConfirmed ||
+      !authMethod ||
+      !authValue ||
+      !paymentType ||
+      !cardBank ||
+      !paymentDay ||
+      !receiptEmail
     ) {
-      const userId = localStorage.getItem('uuid') || localStorage.getItem('user_id');
-      if (!userId) return alert('로그인 상태를 확인해주세요.');
+      alert('모든 항목을 입력해주세요.');
+      return;
+    }
 
+    // user_id 키 이름을 프로젝트에 맞게 맞춤 (예: user_id 또는 uuid)
+    const userId = localStorage.getItem('user_id') || localStorage.getItem('uuid');
+    if (!userId) {
+      alert('로그인 상태를 확인해주세요.');
+      return;
+    }
 
-      try {
-        // DB 저장 요청
-        await axios.patch('/api/auth/update-payment', {
-          id: userId,
-          membership: selectedPlan,
-          payment_type: paymentType,
-          payment_bank: cardBank,
-          payment_info: authValue,
-          payment_date: paymentDay,
-          receipt_email: receiptEmail
-        });
+    try {
+      await axios.patch('https://yts-backend.onrender.com/api/auth/update-payment', {
+        id: userId,
+        membership: selectedPlan,
+        payment_type: paymentType,
+        payment_bank: cardBank,
+        payment_info: authValue,
+        payment_date: paymentDay,
+        receipt_email: receiptEmail,
+      });
 
-        // 로컬에도 저장
-        localStorage.setItem('membership', selectedPlan);
-        localStorage.setItem('paymentInfo', JSON.stringify({
+      // 로컬에도 저장 (필요 시)
+      localStorage.setItem('membership', selectedPlan);
+      localStorage.setItem(
+        'paymentInfo',
+        JSON.stringify({
           type: paymentType,
           bank: cardBank,
           info: authValue,
-          date: paymentDay
-        }));
+          date: paymentDay,
+          receipt_email: receiptEmail,
+        })
+      );
 
-        setIsSubmitted(true);
-      } catch (err) {
-        console.error('❌ 결제 정보 저장 실패:', err);
-        alert('결제 정보 저장 중 오류가 발생했습니다.');
-      }
-    } else {
-      alert('모든 항목을 입력해주세요.');
+      setIsSubmitted(true);
+    } catch (err) {
+      console.error('❌ 결제 정보 저장 실패:', err);
+      alert('결제 정보 저장 중 오류가 발생했습니다.');
     }
   };
 
@@ -122,17 +134,17 @@ function Subscription() {
 
             {authMethod && (
               <>
-                {['card', 'account'].includes(authMethod) && (
-                  <select value={cardBank} onChange={(e) => setCardBank(e.target.value)}>
-                    <option value="">{authMethod === 'card' ? '카드사 선택' : '은행 선택'}</option>
-                    {(authMethod === 'card'
-                      ? ['신한', '국민', '삼성', '현대', '카카오']
-                      : ['신한', '우리', '국민', '카카오', 'IMG']
-                    ).map((item) => (
-                      <option key={item} value={item}>{item}</option>
-                    ))}
-                  </select>
-                )}
+                <select value={cardBank} onChange={(e) => setCardBank(e.target.value)}>
+                  <option value="">{authMethod === 'card' ? '카드사 선택' : '은행 선택'}</option>
+                  {(authMethod === 'card'
+                    ? ['신한', '국민', '삼성', '현대', '카카오']
+                    : ['신한', '우리', '국민', '카카오', 'IMG']
+                  ).map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
 
                 <input
                   type="text"
@@ -140,8 +152,8 @@ function Subscription() {
                     authMethod === 'card'
                       ? '카드 번호 입력'
                       : authMethod === 'account'
-                        ? '계좌 번호 입력'
-                        : ''
+                      ? '계좌 번호 입력'
+                      : ''
                   }
                   value={authValue}
                   onChange={(e) =>
@@ -149,8 +161,8 @@ function Subscription() {
                       authMethod === 'card'
                         ? formatCardNumber(e.target.value)
                         : authMethod === 'account'
-                          ? formatAccountNumber(e.target.value)
-                          : e.target.value
+                        ? formatAccountNumber(e.target.value)
+                        : e.target.value
                     )
                   }
                 />
@@ -197,7 +209,9 @@ function Subscription() {
                     ? ['신한', '국민', '삼성', '현대', '카카오']
                     : ['신한', '우리', '국민', '카카오', 'IMG']
                   ).map((item) => (
-                    <option key={item} value={item}>{item}</option>
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
                   ))}
                 </select>
 
@@ -207,8 +221,8 @@ function Subscription() {
                     paymentType === 'card'
                       ? '카드 번호 입력'
                       : paymentType === 'account'
-                        ? '계좌 번호 입력'
-                        : '전화번호 입력'
+                      ? '계좌 번호 입력'
+                      : '전화번호 입력'
                   }
                   value={authValue}
                   onChange={(e) =>
@@ -216,8 +230,8 @@ function Subscription() {
                       paymentType === 'card'
                         ? formatCardNumber(e.target.value)
                         : paymentType === 'account'
-                          ? formatAccountNumber(e.target.value)
-                          : e.target.value
+                        ? formatAccountNumber(e.target.value)
+                        : e.target.value
                     )
                   }
                 />
