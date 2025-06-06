@@ -142,7 +142,10 @@ function MovieDetail() {
 
   const handleDelete = async (commentId) => {
     try {
-      await axios.delete(`https://yts-backend.onrender.com/api/comments/${commentId}`);
+      // 삭제 시 user_id 전달 (본인 댓글만 삭제 가능하도록)
+      await axios.delete(`https://yts-backend.onrender.com/api/comments/${commentId}`, {
+        data: { user_id: userId },
+      });
       setComments(comments.filter((c) => c.id !== commentId));
     } catch (err) {
       console.error('댓글 삭제 실패:', err);
@@ -162,7 +165,9 @@ function MovieDetail() {
       return;
     }
     try {
+      // 수정 시 user_id 전달 (본인 댓글만 수정 가능하도록)
       await axios.put(`https://yts-backend.onrender.com/api/comments/${commentId}`, {
+        user_id: userId,
         content: editValue,
         rating: editRating,
       });
