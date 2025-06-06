@@ -39,57 +39,63 @@ function Header() {
         </Link>
       </div>
 
-      {/* 상단 네비게이션 */}
-      <nav className="retro-nav">
-        <Link
-          to="/"
-          onClick={() => setSelectedMenu('/')}
-          className={selectedMenu === '/' ? 'active' : ''}
-        >
-          홈
-        </Link>
-
-        <Link
-          to="/explore"
-          onClick={() => setSelectedMenu('/explore')}
-          className={selectedMenu === '/explore' ? 'active' : ''}
-        >
-          장르별
-        </Link>
-
-        <Link
-          to="/support"
-          onClick={() => setSelectedMenu('/support')}
-          className={selectedMenu === '/support' ? 'active' : ''}
-        >
-          고객지원
-        </Link>
-
-        {/* 로그인 시에만 마이페이지 표시 */}
-        {username && (
+      {/* 메뉴 + 로그인/로그아웃 묶는 오른쪽 박스 */}
+      <div className="retro-right-box">
+        {/* 상단 네비게이션 */}
+        <nav className="retro-nav">
           <Link
-            to="/mypage"
-            onClick={() => setSelectedMenu('/mypage')}
-            className={selectedMenu === '/mypage' ? 'active' : ''}
+            to="/"
+            onClick={() => setSelectedMenu('/')}
+            className={selectedMenu === '/' ? 'active' : ''}
           >
-            마이페이지
+            홈
           </Link>
-        )}
+
+          <Link
+            to="/explore"
+            onClick={() => setSelectedMenu('/explore')}
+            className={selectedMenu === '/explore' ? 'active' : ''}
+          >
+            장르별
+          </Link>
+
+          <Link
+            to="/support"
+            onClick={() => setSelectedMenu('/support')}
+            className={selectedMenu === '/support' ? 'active' : ''}
+          >
+            고객지원
+          </Link>
+
+          {/* 로그인 시에만 마이페이지 표시 */}
+          {username && (
+            <Link
+              to="/mypage"
+              onClick={() => setSelectedMenu('/mypage')}
+              className={selectedMenu === '/mypage' ? 'active' : ''}
+            >
+              마이페이지
+            </Link>
+          )}
+        </nav>
 
         {/* 로그인 or 로그아웃 상태 */}
         {username ? (
           <div className="retro-user-box">
             <span className="retro-username">👤 {username}님</span>
-            <button className="retro-button danger" onClick={handleLogout}>
+            <button className="retro-button success" onClick={handleLogout}>
               로그아웃
             </button>
           </div>
         ) : (
-          <button className="retro-button success" onClick={() => navigate('/login')}>
+          <button
+            className="retro-button danger"
+            onClick={() => navigate('/login')}
+          >
             로그인
           </button>
         )}
-      </nav>
+      </div>
     </header>
   );
 }
