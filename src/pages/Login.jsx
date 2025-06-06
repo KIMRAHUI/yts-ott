@@ -20,12 +20,13 @@ function Login({ onLogin }) {
         password: password,
       });
 
-      const { id, username, birth_year } = res.data;
+      const { id, username, birth_year, membership } = res.data;
 
-      // 로그인 성공 → localStorage에 저장
-      localStorage.setItem('userId', id);
-      localStorage.setItem('username', username);
-      localStorage.setItem('birthYear', birth_year);
+      // 로그인 성공 → localStorage에 저장 (MyPage 등과 키 일치시킴)
+      localStorage.setItem('user_id', id);           // 유저 ID (Supabase UUID)
+      localStorage.setItem('username', username);    // 사용자 이름
+      localStorage.setItem('birth', birth_year || '');
+      localStorage.setItem('membership', membership || 'Basic');
       localStorage.setItem('isLoggedIn', 'true');
 
       if (onLogin) onLogin();

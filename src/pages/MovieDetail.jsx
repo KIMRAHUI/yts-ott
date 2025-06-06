@@ -18,12 +18,16 @@ function MovieDetail() {
   const [similarMovies, setSimilarMovies] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
   const [isTrailerPlaying, setIsTrailerPlaying] = useState(false);
+
+  // 반드시 localStorage에 'user_id'로 저장되어 있어야 합니다.
+  // backend 필드명이 user_id로 되어 있어서 키 이름을 맞춰야 합니다.
   const username = localStorage.getItem('username');
+  const userId = localStorage.getItem('user_id'); // key 정확히 확인하세요
   const birthYear = localStorage.getItem('birthYear');
   const currentYear = new Date().getFullYear();
   const age = birthYear ? currentYear - parseInt(birthYear) : null;
-  const userId = localStorage.getItem('userId');
 
+  // 영화 상세 및 댓글 로딩
   useEffect(() => {
     const fetchComments = async () => {
       try {
@@ -109,8 +113,16 @@ function MovieDetail() {
     if (movie) fetchSimilar();
   }, [movie]);
 
+  // 댓글 등록 시 필수 필드 모두 체크하고 요청
   const handleAddComment = async () => {
-    if (!newComment.trim() || newRating === 0) return;
+    if (!newComment.trim() || newRating === 0) {
+      alert('댓글 내용과 평점을 입력해주세요.');
+      return;
+    }
+    if (!userId || !username) {
+      alert('로그인 상태를 확인해주세요.');
+      return;
+    }
     try {
       const res = await axios.post('https://yts-backend.onrender.com/api/comments', {
         user_id: userId,
@@ -124,6 +136,7 @@ function MovieDetail() {
       setNewRating(0);
     } catch (err) {
       console.error('댓글 등록 실패:', err);
+      alert('댓글 등록에 실패했습니다.');
     }
   };
 
@@ -133,6 +146,7 @@ function MovieDetail() {
       setComments(comments.filter((c) => c.id !== commentId));
     } catch (err) {
       console.error('댓글 삭제 실패:', err);
+      alert('댓글 삭제에 실패했습니다.');
     }
   };
 
@@ -143,6 +157,10 @@ function MovieDetail() {
   };
 
   const handleSaveEdit = async (index, commentId) => {
+    if (editValue.trim() === '') {
+      alert('댓글 내용을 입력해주세요.');
+      return;
+    }
     try {
       await axios.put(`https://yts-backend.onrender.com/api/comments/${commentId}`, {
         content: editValue,
@@ -157,6 +175,7 @@ function MovieDetail() {
       setEditRating(0);
     } catch (err) {
       console.error('댓글 수정 실패:', err);
+      alert('댓글 수정에 실패했습니다.');
     }
   };
 

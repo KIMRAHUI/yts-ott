@@ -17,7 +17,7 @@ function Signup({ onSignup }) {
     }
 
     try {
-      // ✅ Supabase 백엔드에 회원 등록 요청
+      //  Supabase 백엔드에 회원 등록 요청
       const response = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/api/auth/signup`,
         {
@@ -30,11 +30,12 @@ function Signup({ onSignup }) {
 
       const { id } = response.data;
 
-      // ✅ localStorage에 로그인 상태 저장
-      localStorage.setItem('userId', id); // Supabase UUID
-      localStorage.setItem('username', userId);
-      localStorage.setItem('birthYear', birthYear);
-      localStorage.setItem('isLoggedIn', 'true');
+      // localStorage에 로그인 상태 저장 (MyPage 호환용)
+      localStorage.setItem('user_id', id);           //  Supabase UUID
+      localStorage.setItem('username', userId);      //  사용자 ID
+      localStorage.setItem('birth', birthYear);      //  출생년도
+      localStorage.setItem('membership', 'Basic');   //  기본 멤버십
+      localStorage.setItem('isLoggedIn', 'true');    //  로그인 상태
 
       if (onSignup) onSignup();
 
