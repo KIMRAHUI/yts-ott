@@ -11,7 +11,10 @@ function Support() {
     { question: '결제 수단은 무엇이 있나요?', answer: '신용카드, 카카오페이, 계좌이체 등이 가능합니다.' },
     { question: '영상 화질이 낮게 나와요.', answer: '설정에서 화질 수동 조절이 가능합니다.' },
     { question: '시청 중 끊김이 있어요.', answer: '인터넷 연결 상태를 점검해주세요.' },
-    { question: '구독을 취소하고 싶어요.', answer: '마이페이지 → 멤버십 정보에서 해지 가능합니다.' },
+   {
+  question: '결제 수단을 변경하고 싶어요.',
+  answer: '마이페이지 > 멤버십 탭에서 카드나 계좌 정보를 수정하실 수 있어요.'
+},
   ];
 
   const filteredFaqs = faqs.filter(faq =>
