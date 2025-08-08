@@ -15,8 +15,6 @@
   border-radius: 4px;
 }
 
-
-
 .movie-thumbnail img {
   width: 100%;
   height: 100%;
@@ -24,7 +22,6 @@
   display: block;
   border-radius: 4px;
 }
-
 
 .home-container .movie-hover {
   position: absolute;
@@ -59,7 +56,6 @@
   color: #cccccc;
 }
 
-
 .retro-movie-card {
   width: 100%;
   max-width: 220px;
@@ -68,19 +64,18 @@
 
 .home-hero {
   width: 100vw;
-  height: auto;
-  max-height: 420px;
   overflow: hidden;
   background-color: #000;
   margin: 0 auto 2rem;
-  box-sizing: border-box;
+  position: relative;
 }
 
 .home-banner {
-  width: 100vw;
-  height: 100%;
+  width: 100%;
+  height: auto;
+  max-height: 420px;
   object-fit: cover;
-  object-position: center top;
+  object-position: center center;
   display: block;
 }
 
@@ -177,15 +172,20 @@
 }
 
 /* 모바일 반응형 대응 */
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .home-hero {
-    aspect-ratio: 16 / 9;
     width: 100vw;
+    height: auto;
+    max-height: none;
     margin: 0;
   }
 
   .home-banner {
+    width: 100%;
+    height: auto;
+    max-height: none;
     object-fit: cover;
+    object-position: center center;
   }
 
   .genre-title {
@@ -250,7 +250,7 @@
     width: 100vw;
     height: 100%;
     object-fit: cover;
-    object-position: left center;
+    object-position: center center;
     display: block;
   }
 
