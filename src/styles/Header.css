@@ -99,18 +99,18 @@
 
 @media (max-width: 480px) {
   .retro-header {
-    flex-direction: row;       /* row 유지 */
+    flex-direction: row;       
     align-items: center;
     flex-wrap: nowrap;
     gap: 0.6rem;
   }
 
   .retro-logo-image {
-    height: 24px;              /* 살짝 축소 */
+    height: 12px;              
   }
 
   .retro-right-box {
-    flex-direction: row;       /* 일렬 정렬 유지 */
+    flex-direction: row;       
     align-items: center;
     gap: 0.6rem;
     margin-left: auto;

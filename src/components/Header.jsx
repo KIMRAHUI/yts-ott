@@ -83,7 +83,7 @@ function Header() {
         {/* 로그인 or 로그아웃 상태 */}
         {username ? (
           <div className="retro-user-box">
-            <span className="retro-username">👤 {username}님</span>
+            
             <button className="retro-button success" onClick={handleLogout}>
               로그아웃
             </button>
