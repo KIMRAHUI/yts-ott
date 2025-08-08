@@ -34,10 +34,11 @@ function Header() {
     <header className="retro-header">
       {/* 로고 */}
       <div className="retro-logo">
-        <Link to="/" className="retro-logo-text">
-          📽️ FilmDreams
+        <Link to="/" className="retro-logo-link">
+          <img src="/flimdreams-logo.png" alt="FlimDreams 로고" className="retro-logo-image" />
         </Link>
       </div>
+
 
       {/* 메뉴 + 로그인/로그아웃 묶는 오른쪽 박스 */}
       <div className="retro-right-box">

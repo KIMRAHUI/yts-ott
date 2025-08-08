@@ -134,10 +134,10 @@ function Home() {
 
       <footer className="retro-footer">
         <div className="footer-line">
-          📧 support@ytsott.com &nbsp;&nbsp;|&nbsp;&nbsp; 📞 1600-0000 &nbsp;&nbsp;|&nbsp;&nbsp; 🕒 평일 10시 ~ 17시
+          📧 support@ytsott.com &nbsp;&nbsp;|&nbsp;&nbsp;  1600-0000 &nbsp;&nbsp;|&nbsp;&nbsp;  평일 10시 ~ 17시
         </div>
         <div className="footer-line">
-          🏢 서울특별시 강남구 테헤란로 123, YTS빌딩
+           서울특별시 강남구 테헤란로 123, YTS빌딩
         </div>
         <p className="footer-copy">Ⓜ 2025 YTS OTT Inc. All rights reserved.</p>
       </footer>

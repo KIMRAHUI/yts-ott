@@ -17,7 +17,7 @@ function Signup({ onSignup }) {
     }
 
     try {
-      //  Supabase 백엔드에 회원 등록 요청
+      // Supabase 백엔드에 회원 등록 요청
       const response = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/api/auth/signup`,
         {
@@ -31,11 +31,11 @@ function Signup({ onSignup }) {
       const { id } = response.data;
 
       // localStorage에 로그인 상태 저장 (MyPage 호환용)
-      localStorage.setItem('user_id', id);           //  Supabase UUID
-      localStorage.setItem('username', userId);      //  사용자 ID
-      localStorage.setItem('birth', birthYear);      //  출생년도
-      localStorage.setItem('membership', 'Basic');   //  기본 멤버십
-      localStorage.setItem('isLoggedIn', 'true');    //  로그인 상태
+      localStorage.setItem('user_id', id);
+      localStorage.setItem('username', userId);
+      localStorage.setItem('birth', birthYear);
+      localStorage.setItem('membership', 'Basic');
+      localStorage.setItem('isLoggedIn', 'true');
 
       if (onSignup) onSignup();
 
@@ -43,11 +43,23 @@ function Signup({ onSignup }) {
       setTimeout(() => navigate('/subscribe'), 100);
 
     } catch (error) {
-      console.error('❌ 회원가입 실패:', error);
-      if (error.response?.status === 400) {
-        alert(error.response.data.message); // 예: 중복 아이디
+      console.error('❌ 회원가입 실패:', {
+        message: error.message,
+        status: error.response?.status,
+        data: error.response?.data,
+      });
+
+      const status = error.response?.status;
+      const serverMessage = error.response?.data?.message;
+
+      if (status === 400) {
+        alert(serverMessage || '잘못된 요청입니다.');
+      } else if (status === 409) {
+        alert(serverMessage || '이미 존재하는 계정입니다.');
+      } else if (status === 500) {
+        alert('서버 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
       } else {
-        alert('회원가입 중 오류가 발생했습니다.');
+        alert('회원가입 중 알 수 없는 오류가 발생했습니다.');
       }
     }
   };

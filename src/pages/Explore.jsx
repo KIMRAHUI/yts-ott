@@ -11,7 +11,7 @@ function Explore() {
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [showStats, setShowStats] = useState(false); // 📊 통계 모달 상태 추가
+  const [showStats, setShowStats] = useState(false); 
 
   const userBirth = localStorage.getItem('birthYear');
   const currentYear = new Date().getFullYear();
@@ -131,7 +131,7 @@ function Explore() {
             <option value="like_count">좋아요순</option>
             <option value="title">제목순</option>
           </select>
-          <button className="stats-btn" onClick={() => setShowStats(true)}>📊 통계 보기</button>
+          <button className="stats-btn" onClick={() => setShowStats(true)}> 통계 보기</button>
         </div>
 
         {showStats && <StatisticsModal onClose={() => setShowStats(false)} />}
